@@ -1,3 +1,5 @@
+# CALCULATOR
+
 def prompt(message)
   puts "=> #{message}"
 end
@@ -101,3 +103,72 @@ loop do
 end
 
 prompt("Thank you for using the calculator. Good bye!")
+
+# LOAN CALCULATOR
+
+puts "Welcome to Loan Calculator"
+
+puts "What is your loan amount in USD?"
+loan_amount = gets.to_f
+
+puts "What is your annual interest rate?"
+apr = gets.to_f / 100
+
+puts "What's the duration of your loan in years?"
+loan_duration_years = gets.to_f
+
+monthly_interest_rate = apr / 12.0
+loan_duration_months = loan_duration_years * 12.0
+
+monthly_payment = loan_amount * (monthly_interest_rate / (1 - (1 + monthly_interest_rate)**(-loan_duration_months)))
+
+puts "Your montly payment is #{monthly_payment.round(2)} USD. Your loan duration is #{loan_duration_months} months and your monthly interest rate is #{monthly_interest_rate.round(3)}%"
+
+#ROCK, PAPER, & SCISSORS
+
+VALID_CHOICES = ['rock', 'paper', 'scissors']
+
+def prompt(message)
+  puts("=> #{message}")
+end
+
+def display_results(player, computer)
+  if (player == 'rock' && computer == 'scissors') ||
+    (player == 'paper' && computer == 'rock') ||
+    (player == 'scissors' && computer == 'paper')
+    prompt("You won!")
+  elsif (player == 'rock' && computer == 'paper') ||
+    (player == 'paper' && computer == 'scissors') ||
+    (player == 'scissors' && computer == 'rock')
+    prompt("Computer won!")
+  else
+    prompt("It's a tie!")
+  end
+end
+
+loop do
+
+  choice = ""
+  loop do
+    prompt("Choose one: #{VALID_CHOICES.join(', ')}")
+    choice = gets.chomp
+
+      if VALID_CHOICES.include?(choice)
+        break
+      else
+        prompt("That's not a valid choice")
+      end
+  end
+
+  computer_choice = VALID_CHOICES.sample
+
+  prompt("You chose: #{choice}; Computer chose: #{computer_choice}")
+
+  display_results(choice, computer_choice)
+
+  prompt("Do you want to play again?")
+  answer = gets.chomp
+  break unless answer.downcase.start_with?('y')
+end
+
+prompt("Thank you for playing")
