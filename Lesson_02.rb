@@ -172,3 +172,59 @@ loop do
 end
 
 prompt("Thank you for playing")
+
+# ROCK, PAPER, SCISSORS, LIZARD, SPOCK
+
+VALID_CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
+
+def display_results(player, computer)
+  if (player == 'rock' && ['scissors', 'lizard'].include?(computer)) ||
+    (player == 'paper' && ['rock', 'spock'].include?(computer)) ||
+    (player == 'scissors' && ['paper', 'lizard'].include?(computer)) ||
+    (player == 'lizard' && ['spock', 'paper'].include?(computer)) ||
+    (player == 'spock' && ['rock', 'scissors'].include?(computer))
+    prompt("You won!")
+    
+  elsif (player == 'rock' && ['paper', 'spock'].include?(computer)) ||
+    (player == 'paper' && ['scissors', 'lizard'].include?(computer)) ||
+    (player == 'scissors' &&['rock', 'spock'].include?(computer)) ||
+    (player == 'lizard' && ['scissors', 'rock'].include?(computer)) ||
+    (player == 'spock' && ['lizard', 'paper'].include?(computer))
+    prompt("Computer won!")
+    
+  else
+    prompt("It's a tie!")
+  end
+end
+
+def prompt(message)
+  puts("=> #{message}")
+end
+
+loop do
+
+  choice = ""
+  loop do
+    prompt("Choose one: #{VALID_CHOICES.join(', ')}")
+    choice = gets.chomp
+
+      if VALID_CHOICES.include?(choice)
+        break
+      else
+        prompt("That's not a valid choice")
+      end
+  end
+
+  computer_choice = VALID_CHOICES.sample
+
+  prompt("You chose: #{choice}; Computer chose: #{computer_choice}")
+
+  display_results(choice, computer_choice)
+
+  prompt("Do you want to play again?")
+  answer = gets.chomp
+  break unless answer.downcase.start_with?('y')
+  
+end
+
+prompt("Thank you for playing")
