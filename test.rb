@@ -1,11 +1,7 @@
-def name
-  "George"
-end
+pets = {
+  "Bartok" => { "age" => 5, "gender" => "male" },
+  "Grey" => { "age" => 10, "gender" => "male" }
+}
 
-name = "Lisa"
-
-def display_name
-  puts name
-end
-
-display_name
+p pets.values[0]
+  
