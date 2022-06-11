@@ -108,3 +108,19 @@ loop do
 end
 
 prompt "Thanks for playing Tic Tac Toe!"
+
+# joinor
+
+def joinor(input, sym1 = ", ", sym2 = "or")
+  if input.length < 3
+    p input.join(" ").insert(-2, "or").insert(-2, " ")
+  else
+    p input.join(sym1).insert(-2, sym2).insert(-2, " ")
+  end
+end
+
+
+joinor([1, 2])                   # => "1 or 2"
+joinor([1, 2, 3])                # => "1, 2, or 3"
+joinor([1, 2, 3], '; ')          # => "1; 2; or 3"
+joinor([1, 2, 3], ', ', 'and')   # => "1, 2, and 3"
