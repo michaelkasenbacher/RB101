@@ -1,53 +1,28 @@
-def get_numbers
-  puts "Enter a number (1-100) to play."
-  @player_number = gets.to_i
-  @computer_number = (1..100).to_a
-end
+@player_cards = [["H", "7"]]
+p @player_cards[0]
 
-def who_wins?
-  sum = @player_number + @computer_number.sample
-  if sum.even?
-    puts "The number is #{sum}"
-    puts "Player wins!"
-    @player_wins += 1
-  else
-    puts "The number is #{sum}"
-    puts "Computer wins!"
-    @computer_wins += 1
-  end
-end
+def total(cards)
+  # cards = [['H', '3'], ['S', 'Q'], ... ]
+  values = cards.map { |card| card[1] }
 
-def score
-  puts "You have won #{@player_wins} times and computer has won #{@computer_wins} times."
-end
-
-def overall_winner
-  if @player_wins == 5
-    puts "You are the overall winner!"
-  elsif @computer_wins == 5
-    puts "Computer is the overall winner!"
-  end
-end
-
-loop do
-  @player_wins = 0
-  @computer_wins = 0
-
-  loop do
-    get_numbers
-    who_wins?
-    score
-    overall_winner
-    if @player_wins == 5
-      puts "Congratulations!"
-      break
-    elsif @computer_wins == 5
-      puts "Sorry you lost."
-      break
+  sum = 0
+  values.each do |value|
+    if value == "A"
+      sum += 11
+    elsif value.to_i == 0 # J, Q, K
+      sum += 10
+    else
+      sum += value.to_i
     end
   end
 
-  puts "Do you want to play again? (y or n)"
-  answer = gets.chomp
-  break unless answer.downcase.start_with?("y")
+  # correct for Aces
+  values.select { |value| value == "A" }.count.times do
+    sum -= 10 if sum > 21
+  end
+
+  sum
 end
+
+p total(@player_cards[0])
+p total(@player_cards)
