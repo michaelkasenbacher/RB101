@@ -1,0 +1,30 @@
+You win this game if you get to 21 without getting over 21.
+
+Rules 
+
+You play this game against the dealer.
+Your aim is to get as close to 21 as possible without getting over 21.
+
+At the start you and the dealer get 2 cards each. 
+You can see your own cards but you can only see the dealer's first card.
+
+You have the first turn. 
+You can either 'hit' and get another card or 'stay' and wait what the dealer does. 
+You can 'hit' as often as you like--as long as you stay under 22.
+If you get over 21, you lose the game. 
+
+The dealer's turn.
+The dealer reveals the second card at the start of their turn. 
+They have to 'hit' until the value of their cards is 17.
+If the dealer gets over 21, they lose and you win.
+They 'stay' if the value of the dealer's cards is between 17 and 22.
+
+Winning the game.
+You win if the dealer goes over 21.
+If you and the dealer stay, the one who comes closes to 21 wins. 
+
+Values.
+The value of numbered cards is their face value.
+The value of Jack, Queen, and King is 10. 
+The value of an Ace is 11 or 1. The value is 11 if the value of the whole hand is under 21, but it drops to 1 if the value goes over 21 (counting the 11 of the Ace's original value).
+

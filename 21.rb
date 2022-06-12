@@ -1,15 +1,23 @@
-deck = [['H', '2'], ['H', '3'], ['H', '4'], ['H', '5'], ['H', '6'], ['H', '7'], ['H', '8'], ['H', '9'], ['H', '10'], ['H', 'J'], ['H', 'Q'], ['H', 'K'], ['H', 'A'],
-['D', '2'], ['D', '3'], ['D', '4'], ['D', '5'], ['D', '6'], ['D', '7'], ['D', '8'], ['D', '9'], ['D', '10'], ['D', 'J'], ['D', 'Q'], ['D', 'K'], ['D', 'A'],
-['C', '2'], ['C', '3'], ['C', '4'], ['C', '5'], ['C', '6'], ['C', '7'], ['C', '8'], ['C', '9'], ['C', '10'], ['C', 'J'], ['C', 'Q'], ['C', 'K'], ['C', 'A'],
-['S', '2'], ['S', '3'], ['S', '4'], ['S', '5'], ['S', '6'], ['S', '7'], ['S', '8'], ['S', '9'], ['S', '10'], ['S', 'J'], ['S', 'Q'], ['S', 'K'], ['S', 'A']]
+deck = [['Hearts', '2'], ['Hearts', '3'], ['Hearts', '4'], ['Hearts', '5'], ['Hearts', '6'], ['Hearts', '7'], ['Hearts', '8'], ['Hearts', '9'], ['Hearts', '10'], ['Hearts', 'Jack'], ['Hearts', 'Queen'], ['Hearts', 'King'], ['Hearts', 'Ace'],
+['Diamonds', '2'], ['Diamonds', '3'], ['Diamonds', '4'], ['Diamonds', '5'], ['Diamonds', '6'], ['Diamonds', '7'], ['Diamonds', '8'], ['Diamonds', '9'], ['Diamonds', '10'], ['Diamonds', 'Jack'], ['Diamonds', 'Queen'], ['Diamonds', 'King'], ['Diamonds', 'Ace'],
+['Clubs', '2'], ['Clubs', '3'], ['Clubs', '4'], ['Clubs', '5'], ['Clubs', '6'], ['Clubs', '7'], ['Clubs', '8'], ['Clubs', '9'], ['Clubs', '10'], ['Clubs', 'Jack'], ['Clubs', 'Queen'], ['Clubs', 'King'], ['Clubs', 'Ace'],
+['Spades', '2'], ['Spades', '3'], ['Spades', '4'], ['Spades', '5'], ['Spades', '6'], ['Spades', '7'], ['Spades', '8'], ['Spades', '9'], ['Spades', '10'], ['Spades', 'Jack'], ['Spades', 'Queen'], ['Spades', 'King'], ['Spades', 'Ace']]
 
 @current_deck = deck
 @player_cards = []
 @dealer_cards = []
 
+def prompt(msg)
+  puts <<-DISTANCE_MARKER
+
+#{msg}
+DISTANCE_MARKER
+end
+
+
 def greeting
   system 'clear'
-  puts "Welcome to Twenty-One"
+  prompt "Welcome to Twenty-One!"
 end
 
 def deal_player(cards)
@@ -25,24 +33,24 @@ def deal_dealer(cards)
 end
 
 def display_player(cards)
-  puts "Your cards are #{cards}."
+  prompt "Your cards are #{cards}."
 end
 
 def display_dealer_first(cards)
-  puts "The dealer's first card is #{cards.first}."
+  prompt "The dealer's first card is #{cards.first}."
 end
 
 def display_dealer(cards)
-  puts "The dealer's cards are #{cards}."
+  prompt "The dealer's cards are #{cards}."
 end
 
 def total(cards)
-  # cards = [['H', '3'], ['S', 'Q'], ... ]
+  # cards = [['Hearts', '3'], ['Spades', 'Queen'], ... ]
   values = cards.map { |card| card[1] }
 
   sum = 0
   values.each do |value|
-    if value == "A"
+    if value == 'Ace'
       sum += 11
     elsif value.to_i == 0 # J, Q, K
       sum += 10
@@ -52,7 +60,7 @@ def total(cards)
   end
 
   # correct for Aces
-  values.select { |value| value == "A" }.count.times do
+  values.select { |value| value == 'Ace' }.count.times do
     sum -= 10 if sum > 21
   end
 
@@ -60,15 +68,15 @@ def total(cards)
 end
 
 def display_player_total(cards)
-  puts "The value of your cards is #{total(@player_cards)}."
+  prompt "The value of your cards is #{total(@player_cards)}."
 end
 
 def display_dealer_total(cards)
-  puts "The value of the dealer's cards is #{total(@dealer_cards)}."
+  prompt "The value of the dealer's cards is #{total(@dealer_cards)}."
 end
 
 # def display_dealer_first(cards)
-#   puts "The value of the dealer's visible card is #{total(@dealer_cards)}."
+#   prompt "The value of the dealer's visible card is #{total(@dealer_cards)}."
 # end
 
 def deal_player_again(cards)
@@ -93,9 +101,9 @@ end
 
 def bust?(cards)
   if player_over_twenty_one?(@player_cards) == true
-    puts "Sorry, you go bust!"
+    prompt "Sorry, you go bust!"
   elsif dealer_over_twenty_one?(@dealer_cards) == true
-    puts "The dealer goes bust! You win!"
+    prompt "The dealer goes bust! You win!"
   end
 end
 
@@ -103,20 +111,20 @@ def counting_winner
   if total(@player_cards) > total(@dealer_cards)
     display_player_total(@player_cards)
     display_dealer_total(@dealer_cards)
-    puts "Congratulations, you win!"
+    prompt "Congratulations, you win!"
   else
     display_player_total(@player_cards)
     display_dealer_total(@dealer_cards)
-    puts "Sorry, the dealer wins!"
+    prompt "Sorry, the dealer wins!"
   end
 end
 
 def player_turn
-  puts "It's your turn:"
+  prompt "It's your turn:"
   
   loop do
-    puts "You can hit another card or stay."
-    puts "Press h or s."
+    prompt "You can hit another card or stay."
+    prompt "Press 'h' to hit or 's' to stay."
     answer = gets.chomp
 
     deal_player_again(@current_deck) if answer.downcase.start_with?('h')
@@ -131,18 +139,18 @@ def player_turn
 end
 
 def dealer_turn
-  puts "It's the dealer's turn"
+  prompt "It's the dealer's turn"
   
   loop do
     display_dealer(@dealer_cards)
 
     if total(@dealer_cards) <= 17
       deal_dealer_again(@current_deck)
-      puts "The dealer hits"
+      prompt "The dealer hits"
       # dealer_over_twenty_one?(@dealer_cards)
       bust?(@dealer_cards)
     elsif total(@dealer_cards).between?(17, 21)
-      puts "The dealer stays"
+      prompt "The dealer stays"
       display_dealer(@dealer_cards)
       break
     elsif dealer_over_twenty_one?(@dealer_cards) == true
