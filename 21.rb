@@ -160,7 +160,7 @@ def dealer_turn
   end
 end
 
-def game_loop
+def turn_loop
   loop do
     player_turn
     break if player_over_twenty_one?(@player_cards) == true
@@ -171,11 +171,22 @@ def game_loop
   end
 end
 
+def game_loop
+  loop do
+    greeting
+    deal_player(@current_deck)
+    deal_dealer(@current_deck)
+    display_player(@player_cards)
+    display_dealer_first(@dealer_cards)
+    display_player_total(total(@player_cards))
+    turn_loop
+
+
+    prompt "Do you want to play again? (y or n)"
+    answer = gets.chomp
+    break unless answer.downcase.start_with?('y')
+  end
+end
+
 # Game starts
-greeting
-deal_player(@current_deck)
-deal_dealer(@current_deck)
-display_player(@player_cards)
-display_dealer_first(@dealer_cards)
-display_player_total(total(@player_cards))
 game_loop

@@ -28,3 +28,13 @@ The value of numbered cards is their face value.
 The value of Jack, Queen, and King is 10. 
 The value of an Ace is 11 or 1. The value is 11 if the value of the whole hand is under 21, but it drops to 1 if the value goes over 21 (counting the 11 of the Ace's original value).
 
+
+<<
+
+
+[['Clubs', 'Queen'], ['Hearts', '9'], [['Spades', '4']]]
+
+
+
+ 
+
