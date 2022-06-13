@@ -16,7 +16,6 @@ end
 
 
 def greeting
-  system 'clear'
   prompt "Welcome to Twenty-One!"
 end
 
@@ -102,20 +101,24 @@ end
 def bust?(cards)
   if player_over_twenty_one?(@player_cards) == true
     prompt "Sorry, you go bust!"
+    @dealer_wins += 1
   elsif dealer_over_twenty_one?(@dealer_cards) == true
     prompt "The dealer goes bust! You win!"
+    @player_wins += 1
   end
 end
 
 def counting_winner
   if total(@player_cards) > total(@dealer_cards)
-    display_player_total(@player_cards)
     display_dealer_total(@dealer_cards)
     prompt "Congratulations, you win!"
-  else
-    display_player_total(@player_cards)
+    @player_wins += 1
+  elsif total(@player_cards) < total(@dealer_cards)
     display_dealer_total(@dealer_cards)
     prompt "Sorry, the dealer wins!"
+    @dealer_wins += 1
+  else
+    prompt "It's a tie!"
   end
 end
 
@@ -170,22 +173,57 @@ def turn_loop
   end
 end
 
-def game_loop
+def score
+  prompt "You have won #{@player_wins} times and the dealer has won #{@dealer_wins} times."
+end
+
+def overall_winner
+  if @player_wins == 3
+    prompt "You are the overall winner!"
+  elsif @dealer_wins == 3
+    prompt "The dealer is the overall winner!"
+  end
+end
+
+# def game_loop
+#   loop do
+#     greeting
+#     deal_player(@current_deck)
+#     deal_dealer(@current_deck)
+#     display_player(@player_cards)
+#     display_dealer_first(@dealer_cards)
+#     display_player_total(total(@player_cards))
+#     turn_loop
+
+#     break if five_time_winner? == true
+#   end
+# end
+
+
+# play again loop
+loop do
+  @player_wins = 0
+  @dealer_wins = 0
+  greeting
+
+  # 5 time loop
   loop do
-    greeting
     deal_player(@current_deck)
     deal_dealer(@current_deck)
     display_player(@player_cards)
     display_dealer_first(@dealer_cards)
     display_player_total(total(@player_cards))
     turn_loop
-
-
-    prompt "Do you want to play again? (y or n)"
-    answer = gets.chomp
-    break unless answer.downcase.start_with?('y')
+    score
+    overall_winner
+    if @player_wins == 3
+      break
+    elsif @dealer_wins == 3
+      break
+    end
   end
-end
 
-# Game starts
-game_loop
+  prompt "Do you want to play again? (y or n)"
+  answer = gets.chomp
+  break unless answer.downcase.start_with?("y")
+end
