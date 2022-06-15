@@ -55,10 +55,8 @@ loop do
     score
     overall_winner
     if @player_wins == 5
-      puts "Congratulations!"
       break
     elsif @computer_wins == 5
-      puts "Sorry you lost."
       break
     end
   end
